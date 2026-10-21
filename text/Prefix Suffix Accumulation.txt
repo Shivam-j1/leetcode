@@ -1,0 +1,87 @@
+PREFIX / SUFFIX ACCUMULATION (LeetCode 238)
+
+Core question:
+For each index i, do I need a summary of everything BEFORE i and/or everything AFTER i?
+If the same ranges are being recomputed for every i, carry their summaries across a pass.
+
+Recognition checklist
+1. The answer at i can be split into a left part and a right part.
+   For 238: answer[i] = product(nums[0..i-1]) * product(nums[i+1..n-1]).
+2. Neighboring answers reuse almost all of those ranges. A running product can be
+   updated with one new element as the scan moves.
+3. Ask: "What does my accumulator contain BEFORE I process index i?"
+   Left-to-right: left = product of elements strictly before i.
+   Right-to-left: right = product of elements strictly after i.
+4. If the problem forbids division, or zeros make a total-product/division
+   shortcut awkward, this decomposition is especially useful.
+This is a reusable pattern for an operation that can accumulate adjacent ranges
+(e.g. sum, product, min/max with a suitable identity). Check the operation and
+empty-side identity for the specific problem; do not blindly copy the product code.
+
+From the nested-loop thought to two passes
+A direct approach scans all j for every i and multiplies when j != i:
+n choices of i times up to n inspected elements = O(n^2). It repeatedly
+recomputes overlapping ranges. Instead, when walking left-to-right, carry the
+product already seen; when walking right-to-left, carry the product already seen
+from that side. Each pass does n constant-time updates: n + n = 2n = O(n).
+The passes are sequential, not nested.
+
+The structure in my .src/Leetcode238.java
+    int[] answer = new int[n];
+    int left = 1;
+    for (int i = 0; i < n; i++) {
+        answer[i] = left;        // exclude nums[i] first
+        left *= nums[i];         // include it for the NEXT index
+    }
+
+    int right = 1;
+    for (int i = n - 1; i >= 0; i--) {
+        answer[i] *= right;      // combine left and right, excluding nums[i]
+        right *= nums[i];        // include it for the NEXT index to the left
+    }
+    return answer;
+
+Visual dry run: nums = [1, 2, 3, 4]
+i                         0    1    2    3
+nums[i]                   1    2    3    4
+left BEFORE writing       1    1    2    6
+answer after left pass    1    1    2    6
+right BEFORE multiplying 24    12    4    1  (right pass visits 3, 2, 1, 0)
+final answer             24    12    8    6
+
+Zoom in at i = 2:
+left pass stored 1 * 2 = 2; right pass brings 4; answer[2] = 2 * 4 = 8.
+Neither side includes nums[2] = 3. At the edges, the empty side contributes 1.
+
+Space: the input nums is given, and the returned answer array is required.
+Apart from answer, only n, i, left, and right are used: O(1) auxiliary space.
+If counting ALL allocated storage, answer is O(n). The LeetCode convention
+excludes this required output array from the extra-space count. An O(n) prefix
+array PLUS an O(n) suffix array would use O(n) auxiliary space. Reusing answer
+for the prefix values is the key space saving, not doing the work in nums.
+
+Common mistakes
+- Multiply nums[i] into left/right before writing answer[i]: includes self.
+- Run the second pass left-to-right: right then describes the wrong side.
+- Reset the accumulator inside the loop: loses reuse and can lead back to O(n^2).
+- Initialize a product accumulator to 0: every product becomes zero; use 1.
+- Overwrite answer[i] with right in pass two: discards the stored left product.
+- Treat zeros as a reason to divide. These two passes work with one or more
+  zeros without special cases; inspect [1, 0, 3, 4] and [0, 2, 0, 4].
+- Claim O(1) total storage without saying the output array is excluded.
+
+Three recall exercises (try on paper before opening the solution)
+1. Recognition: For every i, compute the sum of values strictly before i
+   plus the sum strictly after i. Write the two accumulator invariants and
+   the empty-side identity. Which work would a nested loop repeat?
+2. Rediscovery: Close this note. For nums = [2, 3, 4], fill answer after the
+   first pass; then visit indices 2, 1, 0 and fill the final answer. Say the
+   exact moment each accumulator absorbs nums[i]. Expected final: [12, 8, 6].
+3. Debug and complexity: Someone writes "left *= nums[i]; answer[i] = left"
+   in pass one and makes a separate rightProducts[n] array in pass two.
+   Identify the correctness bug, repair its update order, and state the
+   auxiliary space both before and after removing rightProducts.
+
+One-line recall cue:
+"Need everything except me? Split at me; carry left before i, then carry
+right after i; write first, absorb current second."
