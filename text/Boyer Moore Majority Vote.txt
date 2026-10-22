@@ -1,0 +1,73 @@
+BOYER–MOORE MAJORITY VOTE — LeetCode 169
+
+Problem shape
+A majority element appears more than n/2 times. The task may ask for O(n) time
+and O(1) extra space, so a frequency map is too large.
+
+Core idea: cancel different values in pairs
+Imagine pairing each occurrence of a non-majority value with a different
+occurrence of the candidate. Since the majority appears more than all other
+values combined, it cannot be fully cancelled. The value left as the candidate
+must be the majority, if the problem guarantees that one exists.
+
+Candidate and count
+- count == 0: choose the current value as the candidate.
+- current value equals candidate: add one vote.
+- otherwise: subtract one vote (a cancellation).
+
+Java template when a majority is guaranteed
+    int candidate = 0;
+    int count = 0;
+
+    for (int value : nums) {
+        if (count == 0) {
+            candidate = value;
+        }
+
+        if (value == candidate) {
+            count++;
+        } else {
+            count--;
+        }
+    }
+
+The two if statements are intentional: when count is zero, the current value
+becomes the candidate and then receives its first vote.
+
+Dry run: [2, 2, 1, 1, 1, 2, 2]
+value     2  2  1  1  1  2  2
+candidate  2  2  2  2  1  1  2
+count      1  2  1  0  1  0  1
+
+When the count reaches zero, earlier votes have cancelled in unlike pairs.
+The next value starts a fresh candidate. The final candidate is 2.
+
+If a majority is not guaranteed
+The algorithm still returns a candidate, but that candidate may not occur more
+than n/2 times. Verify it in a second pass:
+    int occurrences = 0;
+    for (int value : nums) {
+        if (value == candidate) {
+            occurrences++;
+        }
+    }
+    if (occurrences <= nums.length / 2) {
+        // No majority element exists.
+    }
+
+Complexity
+- Time: O(n) for the candidate pass; O(n) total if a verification pass is needed.
+- Auxiliary space: O(1): only candidate, count, and a loop variable are used.
+
+Common mistakes
+- Claiming the candidate is always a majority when the input gives no guarantee.
+- Resetting count to 1 but then skipping the current value's vote. The template
+  above avoids that by selecting the candidate and then running the vote update.
+- Using count as the number of occurrences in the whole array. It is a balance
+  after cancellations, not the true frequency.
+- Starting candidate from nums[0] without handling an empty array. The template
+  works for nonempty input; check the problem's constraints or handle empty input.
+
+Recall cue
+“Different values cancel in pairs; a value occurring in more than half the
+array survives every possible cancellation.”
