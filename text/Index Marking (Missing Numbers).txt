@@ -1,0 +1,99 @@
+INDEX MARKING: USE THE ARRAY AS A VISITED SET
+Example: LeetCode 448 - Find All Numbers Disappeared in an Array
+Related implementation: .src/leetcode448.java
+
+1. HOW TO RECOGNIZE THE PATTERN
+Ask these questions:
+- Does the array have length n, with every value in 1..n?
+- Do I need to know whether each value appeared?
+- Am I allowed to modify the input?
+- Is constant auxiliary space required?
+
+Together these clues suggest that each possible value can own one array
+position: value 1 owns index 0, value 2 owns index 1, and value x owns x-1.
+
+A HashSet stores "seen x" separately. Index marking stores that same fact
+inside nums[x-1], using its sign. Negative means seen; positive means unseen.
+The magnitude is preserved so the original value can still be recovered.
+
+2. JAVA TEMPLATE
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        List<Integer> missing = new ArrayList<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            int value = Math.abs(nums[i]);
+            int index = value - 1;
+            nums[index] = -Math.abs(nums[index]);
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) {
+                missing.add(i + 1);
+            }
+        }
+
+        return missing;
+    }
+}
+
+3. WHY Math.abs APPEARS TWICE
+Math.abs(nums[i]):
+An earlier iteration may have marked the current position negative.
+Recover its original value before calculating the target index.
+
+-Math.abs(nums[index]):
+Mark the target negative even if it was already negative.
+Simply multiplying by -1 would undo the mark when a duplicate appears.
+
+4. DRY RUN
+Input: [4,3,2,7,8,2,3,1]
+
+i  recovered value  target index  array after marking
+0       4               3        [4,3,2,-7,8,2,3,1]
+1       3               2        [4,3,-2,-7,8,2,3,1]
+2       2               1        [4,-3,-2,-7,8,2,3,1]
+3       7               6        [4,-3,-2,-7,8,2,-3,1]
+4       8               7        [4,-3,-2,-7,8,2,-3,-1]
+5       2               1        [4,-3,-2,-7,8,2,-3,-1]
+6       3               2        [4,-3,-2,-7,8,2,-3,-1]
+7       1               0        [-4,-3,-2,-7,8,2,-3,-1]
+
+Only indices 4 and 5 remain positive.
+Their corresponding values are 5 and 6, so the answer is [5,6].
+
+5. WHY IT WORKS
+After processing any prefix of the original input, nums[x-1] is negative
+exactly when x appeared in that prefix. Every processed value marks its
+own slot, repeated marks stay negative, and absolute values preserve the
+original numbers. After the full pass, positive slots identify missing values.
+
+6. COMPLEXITY
+Time: O(n). Two consecutive passes cost n + n, not n * n.
+Auxiliary space: O(1), excluding the returned list.
+Output space: O(k), where k is the number of missing values (at most n).
+The input array is modified.
+
+7. COMMON MISTAKES AND LIMITS
+- Use value - 1 for the index; return index + 1 for the missing value.
+- Do not toggle signs: [1,1] must leave index 0 negative.
+- Do not read a marked negative number directly as an index.
+- This exact technique requires original values in 1..n.
+  Zero cannot be marked by negation; arbitrary negative or out-of-range
+  values break the encoding or cause invalid indexing.
+- If input mutation is forbidden, use another approach such as a set.
+- If restoration afterward is needed, make every element positive in a
+  final pass. That restores the original input for this positive-value domain.
+
+8. QUICK SELF-CHECKS
+[1]       gives []
+[1,1]     gives [2]
+[2,2]     gives [1]
+[1,2,3]   gives []
+
+RECALL PROMPT
+Values in 1..n + presence tracking + mutable input:
+Can each value use its own index as a visited flag?
