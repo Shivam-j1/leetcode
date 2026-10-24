@@ -1,0 +1,71 @@
+TWO SUM: HASH MAP COMPLEMENT LOOKUP
+LeetCode 1 — https://leetcode.com/problems/two-sum/
+
+THE IDEA
+For each number x, the partner needed to reach target is target - x.
+Instead of checking every later number with a nested loop, store numbers
+already seen in a HashMap. Each map lookup is expected O(1).
+
+RECOGNIZE THIS PATTERN
+Use complement lookup when:
+- You need a pair whose values add up to a target.
+- You need to find a previously seen value related to the current value
+  (for example, target - current).
+- The input is not sorted, or you want a one-pass solution.
+
+JAVA TEMPLATE
+import java.util.HashMap;
+import java.util.Map;
+
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> indexByValue = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            int needed = target - nums[i];
+
+            // Search before inserting so one array element cannot be used twice.
+            if (indexByValue.containsKey(needed)) {
+                return new int[] { indexByValue.get(needed), i };
+            }
+
+            // Store the index for a future number's lookup.
+            indexByValue.put(nums[i], i);
+        }
+
+        return new int[0]; // Only reached if the input has no valid pair.
+    }
+}
+
+DRY RUN
+nums = [2, 7, 11, 15], target = 9
+
+i   current   needed = target - current   map before check   action
+0      2                  7                    {}             save 2 -> 0
+1      7                  2                 {2 -> 0}          found 2
+Answer: [0, 1]
+
+WHY IT IS O(n), NOT O(n^2)
+The loop visits each element once. For each element it performs a map lookup
+and insertion, both expected O(1). Total expected time is O(n).
+The map can hold up to n entries, so extra space is O(n).
+
+COMMON MISTAKES
+1. Inserting nums[i] before checking the complement: this can match the
+   current element with itself when target == 2 * nums[i].
+2. Returning values instead of indices: the problem asks for array positions.
+3. Forgetting duplicates: for [3, 3], target 6, the second 3 finds the first.
+4. Using a HashMap when the question asks for all pairs: define how duplicate
+   values and repeated pairs should be handled; one index per value may not
+   preserve every occurrence.
+5. Assuming HashMap operations are guaranteed worst-case O(1): interview
+   analysis usually states expected O(1) per operation.
+
+WHEN TWO POINTERS MAY FIT BETTER
+If the array is sorted and the question asks for a pair, two pointers can use
+O(1) extra space. If you sort an unsorted array first, preserve original
+indices if the answer requires indices. HashMap is a direct fit when the
+original indices must be returned in one pass.
+
+CORE MEMORY CUE
+Need a partner for x? Compute target - x, look backward in the map, then save x.
