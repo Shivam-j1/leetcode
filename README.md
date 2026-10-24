@@ -20,9 +20,9 @@ A growing collection of Java solutions and reusable notes for practicing data st
 ## Pattern Notes
 
 - [Prefix Suffix Accumulation](text/Prefix%20Suffix%20Accumulation.txt) — recognizing prefix/suffix problems and building results with directional passes.
-- [Two Pointers (Same direction)](text/Two%20Pointers%20%28Same%20direction%29.txt) — read/write pointer patterns for scanning and in-place array updates.
-
-- [Dutch National Flag (Three-way Partition)](text/Dutch%20National%20Flag%20%28Three-way%20Partition%29.txt) — three-pointer partitioning, invariants, and pointer movement; applied in [75. Sort Colors](.src/SortColors.java).
+- [Two Pointers (Same direction)](text/Two%20Pointers%20(Same%20direction).txt) — read/write pointer patterns for scanning and in-place array updates.
+- [Two Sum (Hash Map Complement Lookup)](text/Two%20Sum%20(Hash%20Map%20Complement%20Lookup).txt) — finding a needed partner in one pass with a value-to-index map.
+- [Dutch National Flag (Three-way Partition)](text/Dutch%20National%20Flag%20(Three-way%20Partition).txt) — three-pointer partitioning, invariants, and pointer movement; applied in [75. Sort Colors](.src/SortColors.java).
 - [Boyer–Moore Majority Vote](text/Boyer%20Moore%20Majority%20Vote.txt) — candidate cancellation and constant-space majority detection; applied in [169. Majority Element](.src/MajorityElement.java).
 
 ## Repository Layout
