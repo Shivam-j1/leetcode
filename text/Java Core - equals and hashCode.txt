@@ -1,0 +1,64 @@
+JAVA CORE: equals() AND hashCode()
+
+1. EQUALITY VS IDENTITY
+- == compares primitive values, but for objects it compares references: are
+  these two variables pointing to the very same object?
+- equals() compares logical equality when a class implements that meaning.
+  Object's default equals() behaves like ==.
+
+2. THE CONTRACT
+When overriding equals(), also override hashCode().
+The essential rule is:
+  if a.equals(b) is true, then a.hashCode() must equal b.hashCode().
+
+The reverse is not required: two unequal objects are allowed to have the same
+hash code. A hash code narrows the search; equals() confirms a match.
+
+3. EXAMPLE
+import java.util.Objects;
+
+class Student {
+    private final int id;
+    private final String name;
+
+    Student(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Student other)) return false;
+        return id == other.id && Objects.equals(name, other.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
+}
+
+Two separate Student objects with the same id and name now compare equal and
+produce the same hash code.
+
+4. WHY HASHMAP AND HASHSET CARE
+A HashMap or HashSet uses hashCode() to choose a bucket, then equals() to find
+the matching key within that bucket. If equal objects have different hash
+codes, a lookup using an equal key may search a different bucket and fail.
+
+5. COMMON MISTAKES
+- Overriding equals() but leaving Object's hashCode(): breaks the contract.
+- Comparing strings with ==: use equals() or Objects.equals().
+- Forgetting null/type checks in equals().
+- Including different fields in equals() and hashCode().
+- Mutating fields used by equals/hashCode after an object becomes a HashMap
+  key or HashSet member: it may become difficult to find in the collection.
+  Prefer immutable key fields.
+
+6. QUICK CHECK
+If a and b represent the same logical value:
+  a.equals(b)       -> true
+  a.hashCode()==b.hashCode() -> true
+
+If hashes match but equals() is false, that is a collision and is valid.
