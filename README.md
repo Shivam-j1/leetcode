@@ -25,8 +25,12 @@ A growing collection of Java solutions and reusable notes for practicing data st
 - [Dutch National Flag (Three-way Partition)](text/Dutch%20National%20Flag%20(Three-way%20Partition).txt) — three-pointer partitioning, invariants, and pointer movement; applied in [75. Sort Colors](.src/SortColors.java).
 - [Boyer–Moore Majority Vote](text/Boyer%20Moore%20Majority%20Vote.txt) — candidate cancellation and constant-space majority detection; applied in [169. Majority Element](.src/MajorityElement.java).
 
+## Java Core Notes
+
+- [equals() and hashCode()](text/Java%20Core%20-%20equals%20and%20hashCode.txt) — the equality contract and how HashMap/HashSet use both methods.
+
 ## Repository Layout
 
 - `.src/` — Java solution files
-- `text/` — reusable pattern notes
+- `text/` — reusable notes
 - `.idea/` — IDE project configuration
