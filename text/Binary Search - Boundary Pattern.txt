@@ -1,0 +1,19 @@
+Binary Search - Boundary Pattern
+
+Use binary search when a sorted search space has a monotonic condition: false then true.
+
+Java template (first true index):
+int lo = 0, hi = nums.length;
+while (lo < hi) {
+    int mid = lo + (hi - lo) / 2;
+    if (mid < nums.length && nums[mid] >= target) hi = mid;
+    else lo = mid + 1;
+}
+return lo;
+
+Example: nums = [1, 3, 3, 5], target = 3 -> index 1.
+
+Invariant: the first valid position, if any, remains within [lo, hi].
+Time O(log n), extra space O(1).
+
+Common mistakes: using <= instead of < with a half-open interval; forgetting to update lo to mid+1; confusing first occurrence with any occurrence.
