@@ -1,0 +1,27 @@
+JAVA CORE: COMPARABLE VS COMPARATOR
+
+Comparable defines the natural ordering inside a class via compareTo(). Comparator defines an external/custom ordering via compare().
+
+Example: sort integers in descending order
+
+import java.util.*;
+
+class Example {
+    public static void main(String[] args) {
+        List<Integer> nums = new ArrayList<>(Arrays.asList(4, 1, 7, 2));
+        nums.sort((a, b) -> Integer.compare(b, a));
+        System.out.println(nums); // [7, 4, 2, 1]
+    }
+}
+
+Key points:
+- Comparable<T>: int compareTo(T other)
+- Comparator<T>: int compare(T a, T b)
+- Return negative, zero, positive for less than, equal, greater than.
+- Prefer Integer.compare(a, b) over a - b to avoid overflow.
+- Comparator.comparing(Person::getAge) creates a comparator from a key.
+- .reversed() reverses a comparator.
+
+Complexity: Java's List.sort is O(n log n) time in the worst case for object lists.
+
+Interview connection: sorting intervals, custom ordering, priority queues, and greedy algorithms.
