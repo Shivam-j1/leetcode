@@ -29,7 +29,7 @@ A growing collection of Java solutions and reusable notes for practicing data st
 ## Java DSA Practice
 
 - [Binary Search Boundary Practice](practice/BinarySearchBoundaryExercises.md) — progressive exercises for first-true search, LeetCode 35, LeetCode 34, and LeetCode 875, with edge cases and hints.
-- [Java test harness](practice/BinarySearchBoundaryTest.java) — runnable checks for the exercise cases; the separate [solutions](practice/solutions/BinarySearchBoundarySolutions.java) file contains the implementations.
+- [Java starter file](practice/BinarySearchBoundaryAttempt.java) and [test harness](practice/BinarySearchBoundaryTest.java) — implement the methods and run the edge-case checks; the separate [solutions](practice/solutions/BinarySearchBoundarySolutions.java) file contains the answer key.
 
 ## Java Core Notes
 
