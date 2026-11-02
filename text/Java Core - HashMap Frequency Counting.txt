@@ -1,0 +1,31 @@
+JAVA CORE: HASHMAP FREQUENCY COUNTING
+
+When to use:
+- Count occurrences of numbers or characters.
+- Check whether two strings are anagrams.
+- Find duplicates or the most frequent element.
+
+Core Java pattern:
+Map<Integer, Integer> freq = new HashMap<>();
+for (int num : nums) {
+    freq.put(num, freq.getOrDefault(num, 0) + 1);
+}
+
+Example: nums = [2, 3, 2, 4, 3, 2]
+Result: {2=3, 3=2, 4=1}
+
+Useful operations:
+- freq.getOrDefault(key, 0): returns 0 when absent.
+- freq.containsKey(key): checks whether a key exists.
+- freq.entrySet(): iterates over key-value pairs.
+- freq.remove(key): deletes an entry.
+
+Complexity: O(n) expected time and O(k) extra space, where k is the number of distinct keys. HashMap operations are typically O(1) on average, not guaranteed constant time in every case.
+
+Common mistakes:
+- Using get(key) without checking for null.
+- Confusing containsKey() with containsValue().
+- Assuming HashMap preserves insertion order (use LinkedHashMap when order matters).
+- Forgetting import java.util.*;
+
+Practice: LeetCode 1 (Two Sum), 242 (Valid Anagram), 347 (Top K Frequent Elements).
