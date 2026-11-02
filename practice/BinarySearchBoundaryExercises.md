@@ -4,16 +4,16 @@ Use the idea from [Binary Search - Boundary Pattern](../text/Binary%20Search%20-
 
 ## How to practice
 
-1. Implement each method in the exercise order.
+1. Implement each method in the starter file [BinarySearchBoundaryAttempt.java](BinarySearchBoundaryAttempt.java) in exercise order.
 2. For each loop, state what `lo` and `hi` mean and whether the interval is closed or half-open.
 3. Trace one example by hand, especially when `mid` is already valid.
-4. Run the [Java test harness](BinarySearchBoundaryTest.java) after you attempt the methods. It expects the methods in the solutions file; copy only the method bodies into your own work if you want to keep the answer file unopened.
+4. Run the [Java test harness](BinarySearchBoundaryTest.java) after you attempt the methods. It runs against the starter file; each unimplemented method fails visibly, so you can work through the tests before opening the answer key.
 
 From the repository root, compile and run with:
 
 ```sh
-javac practice/solutions/BinarySearchBoundarySolutions.java practice/BinarySearchBoundaryTest.java
-java -cp practice/solutions:practice BinarySearchBoundaryTest
+javac practice/BinarySearchBoundaryAttempt.java practice/BinarySearchBoundaryTest.java
+java -cp practice BinarySearchBoundaryTest
 ```
 
 On Windows Command Prompt, use `;` instead of `:` in the classpath.
