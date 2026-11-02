@@ -24,6 +24,12 @@ A growing collection of Java solutions and reusable notes for practicing data st
 - [Two Sum (Hash Map Complement Lookup)](text/Two%20Sum%20(Hash%20Map%20Complement%20Lookup).txt) — finding a needed partner in one pass with a value-to-index map.
 - [Dutch National Flag (Three-way Partition)](text/Dutch%20National%20Flag%20(Three-way%20Partition).txt) — three-pointer partitioning, invariants, and pointer movement; applied in [75. Sort Colors](.src/SortColors.java).
 - [Boyer–Moore Majority Vote](text/Boyer%20Moore%20Majority%20Vote.txt) — candidate cancellation and constant-space majority detection; applied in [169. Majority Element](.src/MajorityElement.java).
+- [Binary Search - Boundary Pattern](text/Binary%20Search%20-%20Boundary%20Pattern.txt) — first-true search over a monotonic condition.
+
+## Java DSA Practice
+
+- [Binary Search Boundary Practice](practice/BinarySearchBoundaryExercises.md) — progressive exercises for first-true search, LeetCode 35, LeetCode 34, and LeetCode 875, with edge cases and hints.
+- [Java test harness](practice/BinarySearchBoundaryTest.java) — runnable checks for the exercise cases; the separate [solutions](practice/solutions/BinarySearchBoundarySolutions.java) file contains the implementations.
 
 ## Java Core Notes
 
@@ -33,4 +39,5 @@ A growing collection of Java solutions and reusable notes for practicing data st
 
 - `.src/` — Java solution files
 - `text/` — reusable notes
+- `practice/` — exercises, a test harness, and separate solutions
 - `.idea/` — IDE project configuration
