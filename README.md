@@ -25,6 +25,7 @@ A growing collection of Java solutions and reusable notes for practicing data st
 - [Dutch National Flag (Three-way Partition)](text/Dutch%20National%20Flag%20(Three-way%20Partition).txt) — three-pointer partitioning, invariants, and pointer movement; applied in [75. Sort Colors](.src/SortColors.java).
 - [Boyer–Moore Majority Vote](text/Boyer%20Moore%20Majority%20Vote.txt) — candidate cancellation and constant-space majority detection; applied in [169. Majority Element](.src/MajorityElement.java).
 - [Binary Search - Boundary Pattern](text/Binary%20Search%20-%20Boundary%20Pattern.txt) — first-true search over a monotonic condition.
+- [Kth Missing Positive](text/Binary%20Search%20-%20Kth%20Missing%20Positive.txt) — binary-searching the first index where the missing-count reaches k.
 
 ## Java DSA Practice
 
