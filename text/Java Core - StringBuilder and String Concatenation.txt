@@ -1,0 +1,53 @@
+JAVA CORE: STRINGBUILDER AND STRING CONCATENATION
+
+String objects are immutable: once created, their contents cannot be changed.
+An expression such as text = text + part creates a new String containing the
+combined text and assigns it back to text.
+
+For a few fixed concatenations, + is clear and perfectly fine. In a loop,
+repeatedly rebuilding a growing String can do extra copying. StringBuilder
+keeps a mutable character sequence, so append operations avoid creating a new
+String for every step.
+
+EXAMPLE
+
+String[] words = {"learn", "Java", "well"};
+StringBuilder result = new StringBuilder();
+
+for (int i = 0; i < words.length; i++) {
+    if (i > 0) {
+        result.append(" ");
+    }
+    result.append(words[i]);
+}
+
+String sentence = result.toString();
+System.out.println(sentence); // learn Java well
+
+USEFUL METHODS
+
+- append(value): add text at the end
+- insert(index, value): add text at a position
+- delete(start, end): remove characters in the half-open range [start, end)
+- reverse(): reverse the current sequence
+- toString(): create a String containing the final result
+
+WHEN TO CHOOSE
+
+- Use + for short, readable expressions or a small fixed number of pieces.
+- Use StringBuilder when assembling many pieces, especially inside a loop.
+- Use StringBuffer when multiple threads must modify the same character
+  sequence; its methods are synchronized. StringBuilder is not thread-safe.
+
+COMMON MISTAKES
+
+- Comparing strings with == checks whether references are identical. Use
+  equals() to compare their contents.
+- Calling toString() on every loop iteration recreates intermediate strings.
+  Build first, then call toString() once when the final String is needed.
+- Forgetting that StringBuilder is mutable: append() changes the same builder.
+
+RULE OF THUMB
+
+Build with StringBuilder when the number of concatenations grows; convert to
+String at the boundary where an immutable String is needed.
