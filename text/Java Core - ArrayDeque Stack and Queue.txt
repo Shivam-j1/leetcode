@@ -1,0 +1,33 @@
+JAVA CORE: ARRAYDEQUE AS STACK AND QUEUE
+
+ArrayDeque is a resizable double-ended queue. It is usually preferred over the legacy Stack class for stack operations and over LinkedList for basic queue operations.
+
+import java.util.*;
+
+class ArrayDequeDemo {
+    public static void main(String[] args) {
+        Deque<Integer> stack = new ArrayDeque<>();
+        stack.push(10);
+        stack.push(20);
+        System.out.println(stack.pop()); // 20 (LIFO)
+
+        Queue<Integer> queue = new ArrayDeque<>();
+        queue.offer(10);
+        queue.offer(20);
+        System.out.println(queue.poll()); // 10 (FIFO)
+    }
+}
+
+STACK: push(x), pop(), peek()
+QUEUE: offer(x), poll(), peek()
+DOUBLE-ENDED QUEUE: offerFirst(x), offerLast(x), pollFirst(), pollLast()
+
+Important differences:
+- pop() throws NoSuchElementException if empty; poll() returns null.
+- peek() returns null if empty.
+- ArrayDeque does not allow null elements.
+- ArrayDeque is not thread-safe.
+
+Complexity: O(1) amortized for insertion/removal at either end; occasional resizing can take O(n).
+
+Practice: LeetCode 20 Valid Parentheses, 739 Daily Temperatures, 239 Sliding Window Maximum.
